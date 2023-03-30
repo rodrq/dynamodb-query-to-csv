@@ -2,3 +2,4 @@
 venv
 __pycache__
 data/*
+!data/23-03-01 (example)
