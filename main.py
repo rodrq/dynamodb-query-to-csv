@@ -6,14 +6,10 @@ import csv
 
 load_dotenv()
 
-
-
-
-
-aws_region = 'us-east-2'
-table_name = 'tracker_db'
-
-class DynamoQuery:
+class UberFaresQuery:
+    """
+    Adds functions for my personal case. I need to create a batch of .csv files to avoid consuming my AWS Free tier :(.
+    """
     def __init__(self, table_name, month, year, partition_key, aws_region='us-east-2'):
         self.table_name = table_name
         self.month = month
@@ -83,8 +79,7 @@ class DynamoQuery:
 
 
 
-query = DynamoQuery('tracker_db', 3, 2023, 'date')
-
+query = UberFaresQuery('tracker_db', 3, 2023, 'date')
 query.tocvs_fares_in_month()
 
 
