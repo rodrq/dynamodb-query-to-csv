@@ -9,6 +9,8 @@ load_dotenv()
 class UberFaresQuery:
     """
     Adds functions for my personal case. I need to create a batch of .csv files to avoid consuming my AWS Free tier :(.
+    My db partition key is 'date' like '23-03-30'. Inside each date, it stores an Uber Fare price every minute.
+         
     """
     def __init__(self, table_name, month, year, partition_key, aws_region='us-east-2'):
         self.table_name = table_name
@@ -27,7 +29,7 @@ class UberFaresQuery:
         dynamodb = session.resource('dynamodb')
         table = dynamodb.Table(self.table_name)
         return table
-    
+   
     def query_by_sortkey(self, sort_key):
         query_params = {
             'KeyConditionExpression': '#key = :pk_value',
@@ -51,6 +53,7 @@ class UberFaresQuery:
         days = [n+1 for n in range(last_day_of_month)]
         return days
     
+    #Sets every day in a given month to my db's date format. From whatever to "%y-%m-%d" 
     def format_all_days_in_month(self):
         if self.year < 1000:
             raise Exception('Year arg needs 4 digits year')
@@ -79,7 +82,7 @@ class UberFaresQuery:
 
 
 
-query = UberFaresQuery('tracker_db', 3, 2023, 'date')
-query.tocvs_fares_in_month()
+"""query = UberFaresQuery('tracker_db', 3, 2023, 'date')
+query.tocvs_fares_in_month()"""
 
 
